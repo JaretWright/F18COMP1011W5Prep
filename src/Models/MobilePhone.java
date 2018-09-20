@@ -117,4 +117,9 @@ public class MobilePhone {
         this.phoneImage = phoneImage;
     }
 
+    public String toString()
+    {
+        return String.format("%s %s with %.0f gigs of memory", this.make,
+                                this.model, this.memory);
+    }
 }
