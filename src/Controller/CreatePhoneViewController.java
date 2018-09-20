@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.DBConnect;
+import Models.MobilePhone;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -15,17 +17,17 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CreatePhoneViewController implements Initializable {
-    @FXML
-    private ChoiceBox<String> makeChoiceBox;
+    @FXML private ChoiceBox<String> makeChoiceBox;
+    @FXML private ChoiceBox<String> osChoiceBox;
+    @FXML private Label memoryLabel;
+    @FXML private Slider memorySlider;
+    @FXML private TextField modelTextField;
+    @FXML private TextField screenSizeTextField;
+    @FXML private TextField frontCameraTextField;
+    @FXML private TextField rearCameraTextField;
+    @FXML private TextField priceTextField;
 
-    @FXML
-    private ChoiceBox<String> osChoiceBox;
 
-    @FXML
-    private Label memoryLabel;
-
-    @FXML
-    private Slider memorySlider;
 
     /**
      * This method will provide initial values for the view
@@ -57,13 +59,13 @@ public class CreatePhoneViewController implements Initializable {
         //Configure the slider
         memorySlider.setMin(8);
         memorySlider.setMax(512);
+        memoryLabel.setText("");
         memorySlider.valueProperty().addListener((observable, oldValue, newValue) ->
-                                                memoryLabel.setText(String.format("%.0f",newValue)));
+                                    memoryLabel.setText(String.format("%.0f",newValue)));
     }
 
     /**
-     * This method will update the slider memory label
-     * @param os
+     * This method will update the slider memory label.  Connect it with "onScroll" in SceneBuilder
      */
     @FXML
     public void updateMemoryLabel()
@@ -92,5 +94,18 @@ public class CreatePhoneViewController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void createPhoneButtonPushed()
+    {
+        MobilePhone newPhone = new MobilePhone(makeChoiceBox.getValue(),
+                                               modelTextField.getText(),
+                                            osChoiceBox.getValue(),
+                                            Double.parseDouble(screenSizeTextField.getText()),
+                                            Double.parseDouble(memoryLabel.getText()),
+                                            Double.parseDouble(frontCameraTextField.getText()),
+                                            Double.parseDouble(rearCameraTextField.getText()));
+        System.out.printf("The new phone is %s%n", newPhone);
     }
 }
