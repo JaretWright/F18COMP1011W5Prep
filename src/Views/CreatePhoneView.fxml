@@ -113,10 +113,10 @@
             </GridPane>
             <VBox spacing="20.0">
                <children>
-                  <ImageView fitHeight="179.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageView" fitHeight="179.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true" />
                   <StackPane>
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="215.0" text="Choose Image">
+                        <Button mnemonicParsing="false" onAction="#chooseImageButtonPushed" prefWidth="215.0" text="Choose Image">
                            <font>
                               <Font size="18.0" />
                            </font>

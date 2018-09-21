@@ -4,13 +4,21 @@ import Models.DBConnect;
 import Models.MobilePhone;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +34,7 @@ public class CreatePhoneViewController implements Initializable {
     @FXML private TextField frontCameraTextField;
     @FXML private TextField rearCameraTextField;
     @FXML private TextField priceTextField;
+    @FXML private ImageView imageView;
 
 
 
@@ -108,4 +117,54 @@ public class CreatePhoneViewController implements Initializable {
                                             Double.parseDouble(rearCameraTextField.getText()));
         System.out.printf("The new phone is %s%n", newPhone);
     }
+
+    public void chooseImageButtonPushed(ActionEvent event)
+    {
+        //get the Stage to open a new window (or Stage in JavaFX)
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        //Instantiate a FileChooser object
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+
+        //filter for .jpg and .png
+        FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Image File (*.jpg, *.png)", "*.jpg", "*.png");
+//        FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Image File (*.png)", "*.png");
+//        fileChooser.getExtensionFilters().addAll(jpgFilter, pngFilter);
+        fileChooser.getExtensionFilters().add(jpgFilter);
+
+        //Set to the user's picture directory or user directory if not available
+        String userDirectoryString = System.getProperty("user.home")+"\\Pictures";
+        File userDirectory = new File(userDirectoryString);
+
+        //if you cannot navigate to the pictures directory, go to the user home
+        if (!userDirectory.canRead())
+            userDirectory = new File(System.getProperty("user.home"));
+
+        fileChooser.setInitialDirectory(userDirectory);
+
+        //open the file dialog window
+        File imageFile = fileChooser.showOpenDialog(stage);
+
+        if (imageFile != null)
+        {
+            //update the ImageView with the new image
+            if (imageFile.isFile())
+            {
+                try
+                {
+//                    BufferedImage bufferedImage = ImageIO.read(imageFile);
+//                    Image img = SwingFXUtils.toFXImage(bufferedImage, null);
+                    Image image = new Image(imageFile.toURI().toString());
+                    imageView.setImage(image);
+                }
+                catch (Exception e)
+                {
+                    System.err.println(e.getMessage());
+                }
+            }
+        }
+
+    }
+
 }
