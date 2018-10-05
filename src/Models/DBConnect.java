@@ -1,9 +1,11 @@
 package Models;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBConnect {
     private static String user = "student";
@@ -172,5 +174,52 @@ public class DBConnect {
                 resultSet.close();
         }
         return manufacturers;
+    }
+
+    public static ObservableList<MobilePhone> getAllPhones() throws SQLException {
+        ObservableList<MobilePhone> phones = FXCollections.observableArrayList();
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try{
+            //1. connect to the database
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/phones?useSSL=false",
+                    user, password);
+
+            //2.  create a statement object
+            statement = conn.createStatement();
+
+            //3.  create the SQL query
+            resultSet = statement.executeQuery("SELECT * FROM phones");
+
+            //4.  loop over the results from the DB and add to ArrayList
+            while (resultSet.next())
+            {
+                MobilePhone newPhone = new MobilePhone(
+                        resultSet.getString("make"),
+                        resultSet.getString("model"),
+                        resultSet.getString("os"),
+                        resultSet.getDouble("screenSize"),
+                        resultSet.getDouble("memory"),
+                        resultSet.getDouble("frontCamRes"),
+                        resultSet.getDouble("rearCamRes"));
+
+                phones.add(newPhone);
+            }
+        } catch (Exception e)
+        {
+            System.err.println(e);
+        }
+        finally
+        {
+            if (conn != null)
+                conn.close();
+            if(statement != null)
+                statement.close();
+            if(resultSet != null)
+                resultSet.close();
+        }
+        return phones;
     }
 }

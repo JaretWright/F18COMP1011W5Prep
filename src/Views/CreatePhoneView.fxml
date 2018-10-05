@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreatePhoneViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreatePhoneViewController">
    <children>
       <HBox alignment="CENTER" layoutX="29.0" layoutY="65.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -132,6 +132,11 @@
                         </Button>
                      </children>
                   </StackPane>
+                  <Button mnemonicParsing="false" onAction="#changeToTableViewButtonPushed" text="See All Phones in System">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
          </children>

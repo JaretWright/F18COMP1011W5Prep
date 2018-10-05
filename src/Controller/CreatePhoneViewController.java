@@ -167,4 +167,10 @@ public class CreatePhoneViewController implements Initializable {
 
     }
 
+    @FXML
+    public void changeToTableViewButtonPushed(ActionEvent actionEvent) throws IOException {
+        //SceneChanger sc = new SceneChanger();
+        SceneChanger.changeScenes(actionEvent, "../Views/TableOfPhones.fxml","Table of Phones");
+    }
+
 }
